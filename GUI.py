@@ -116,7 +116,8 @@ def NaiveBayes():
         t3.delete("1.0", END)
         t3.insert(END, "Not Found")
 
-# GUI setup
+        # gui
+
 if __name__ == '__main__':
     root = Tk()
     root.title("Disease Predictor")
@@ -130,16 +131,17 @@ if __name__ == '__main__':
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
     # Heading
-    w2 = Label(root, justify=CENTER, text="Disease Predictor using Machine Learning", fg="black", bg='SystemButtonFace')
+    w2 = Label(root, justify=CENTER, text="Disease Predictor using Machine Learning", fg="black", bg=None)
     w2.config(font=("Helvetica", 24, "bold"))
     w2.pack(pady=20)
 
     # Create a frame for input fields
-    input_frame = Frame(root, bg='SystemButtonFace')
+    input_frame = Frame(root, bg=None)
     input_frame.pack(pady=20)
 
     # labels and entries
     entries = [
+        ("Patient's Name", Name := StringVar()),
         ("Symptom 1", Symptom1 := StringVar()),
         ("Symptom 2", Symptom2 := StringVar()),
         ("Symptom 3", Symptom3 := StringVar()),
@@ -148,13 +150,16 @@ if __name__ == '__main__':
     ]
 
     for i, (text, var) in enumerate(entries):
-        label = Label(input_frame, text=text, fg="black", bg='SystemButtonFace', font=("Helvetica", 12))
+        label = Label(input_frame, text=text, fg="black", bg=None, font=("Helvetica", 12))
         label.grid(row=i, column=0, pady=5, sticky=W)
-        entry = ttk.Combobox(input_frame, textvariable=var, values=sorted(l1), font=("Helvetica", 12))
+        if text == "Patient's Name":
+            entry = Entry(input_frame, textvariable=var, font=("Helvetica", 12))
+        else:
+            entry = ttk.Combobox(input_frame, textvariable=var, values=sorted(l1), font=("Helvetica", 12))
         entry.grid(row=i, column=1, pady=5, padx=10)
 
     # Button frame
-    button_frame = Frame(root, bg='SystemButtonFace')
+    button_frame = Frame(root, bg=None)
     button_frame.pack(pady=20)
 
     # Buttons
@@ -169,18 +174,18 @@ if __name__ == '__main__':
         btn.pack(side=LEFT, padx=10)
 
     # Result frame
-    result_frame = Frame(root, bg='SystemButtonFace')
+    result_frame = Frame(root, bg=None)
     result_frame.pack(pady=20)
 
     # Results
     results = [
-        ("DecisionTree Result:", t1 := Entry(result_frame, width=40, font=("Helvetica", 12), readonlybackground='SystemButtonFace', state='readonly')),
-        ("RandomForest Result:", t2 := Entry(result_frame, width=40, font=("Helvetica", 12), readonlybackground='SystemButtonFace', state='readonly')),
-        ("NaiveBayes Result:", t3 := Entry(result_frame, width=40, font=("Helvetica", 12), readonlybackground='SystemButtonFace', state='readonly'))
+        ("DecisionTree Result:", t1 := Text(result_frame, height=1, width=40, bg=None, fg="black", font=("Helvetica", 12))),
+        ("RandomForest Result:", t2 := Text(result_frame, height=1, width=40, bg=None, fg="black", font=("Helvetica", 12))),
+        ("NaiveBayes Result:", t3 := Text(result_frame, height=1, width=40, bg=None, fg="black", font=("Helvetica", 12)))
     ]
 
     for i, (text, t) in enumerate(results):
-        Label(result_frame, text=text, fg="black", bg='SystemButtonFace', font=("Helvetica", 12)).grid(row=i, column=0, pady=5, sticky=W)
+        Label(result_frame, text=text, fg="black", bg=None, font=("Helvetica", 12)).grid(row=i, column=0, pady=5, sticky=W)
         t.grid(row=i, column=1, pady=5, padx=10)
 
     root.mainloop()
